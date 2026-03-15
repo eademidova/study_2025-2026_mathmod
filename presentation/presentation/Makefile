@@ -2,7 +2,7 @@ all:
 	-@quarto render
 
 clean:
-	-rm -rf _output
+	-rm -rf _presentation
 
 cleanall: clean
 	-rm -rf .quarto

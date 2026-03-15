@@ -1,0 +1,362 @@
+1. Традиционные сети (включая 5G) ориентированы на передачу битов, не учитывая смысл или задачу, ради которой передаются данные. Это приводит к избыточности, неэффективности и неспособности поддерживать интеллектуальные, контекстно-зависимые сервисы будущего. Будущие приложения (XR, метавселенная, автономные транспортные системы, распределённый AI) требуют передачи не просто данных, а смысла и намерений. Для этого необходима сеть, где AI встроен в саму архитектуру, а не работает как внешний оптимизатор.
+
+
+# Эволюция стандартов 6G в сторону ИИ
+
+1.  5G (AI assisted): ИИ выполняет вспомогательную роль в виде отдельных компонентов (например, SON — самоорганизующаяся сеть), работающих параллельно с сетевыми функциями (NF).
+2.  5G-Advanced (AI powered): ИИ становится более мощным инструментом. Появляются специализированные сетевые функции ИИ (AI NF), такие как NWDAF (функция анализа данных сети), внедряются практики MLOps для управления моделями.
+3.  6G (AI native): ИИ закладывается в основу архитектуры. Сеть изначально проектируется для поддержки ИИ, все ключевые функции (AI NF) тесно взаимодействуют друг с другом, обеспечивая встроенную аналитику, оркестрацию моделей и совместную работу.
+
+
+L1
+**Глубокое совместное кодирование источника и канала (Deep JSCC)**
+Традиционные системы связи сжимают данные (чтобы убрать избыточность), а затем добавляют помехоустойчивое кодирование (чтобы защитить от ошибок в эфире), работая как два отдельных блока.
+Deep JSCC — это нейросеть, которая делает это одновременно (сквозное обучение). Она преобразует данные (например, изображение) сразу в радиосигнал, оптимизируя его так, чтобы на приемной стороне нейросеть могла восстановить не просто биты, а именно смысл (например, узнать объект на фото), даже если сигнал был частично искажен.
+
+**Нейронные приемопередатчики (Neural Transceivers)**
+Это концепция, где и передатчик, и приемник заменены нейросетями.
+Вместо жестко заданных алгоритмов модуляции (QAM, PSK) и кодирования, сеть сама находит наилучший способ упаковки символов в эфир под конкретные условия (уровень шума, движение). Они "договариваются" друг с другом через процесс обучения,
+
+
+**Новые метрики: TSR и Семантическая точность**
+BER/BLER (старые метрики): Сеть хороша, если принятые биты совпадают с отправленными на 99.99%.
+TSR (Task Success Rate — новые метрики): Сеть хороша, если робот получил команду и успешно выполнил задачу.
+Семантическая точность: Насколько "понятый" смысл близок к отправленному. Измеряется через косинусное расстояние в векторном пространстве нейросети.
+
+
+**Обучение с подкреплением (Reinforcement Learning — RL)**
+Используется для проактивной адаптации.
+В отличие от сквозного обучения, которое обрабатывает конкретный сигнал, RL учит агента (например, базовую станцию) принимать решения.
+- Формирование луча (Beamforming): Агент пробует разные направления луча, получает "награду" (хороший сигнал от пользователя) и запоминает, куда нужно направлять луч в зависимости от времени суток или перемещений абонентов.
+- Доступ к спектру: Агент учится "чувствовать" свободные частоты и занимать их, не мешая другим, методом проб и ошибок.
+
+**Методы сжатия для периферии (Edge Optimization)**
+Поскольку нейросети "тяжелые", а устройства (датчики, дроны) имеют мало батареи и памяти, применяются техники сжатия:
+
+- Прореживание (Pruning): Из нейросети удаляются нейроны и связи, которые почти не влияют на результат.
+- Квантование (Quantization): Веса нейросети (обычно 32-битные числа) "грубо округляются" до 8-битных или даже 4-битных чисел. 
+- Адаптивная сложность: Нейросеть может работать в двух режимах: "быстрый/экономный", когда связь хорошая, и "медленный/точный", когда связь плохая.
+
+L2
+
+**Заметки для докладчика:**
+**Непрерывное обучение (Continual Learning) и Самообучение (Self-supervised Learning)**
+В условиях нестационарности радиочастотной среды и динамики трафика статически обученные модели неизбежно деградируют.
+
+Continual Learning — парадигма, позволяющая модели адаптироваться к новым распределениям данных (non-stationary environments) без катастрофического забывания ранее усвоенных закономерностей. Это достигается за счет регуляризации, реплей-буферов или архитектурной расширяемости.
+
+Self-supervised Learning — метод обучения без размеченных данных, при котором модель формирует псевдо-метки на основе структуры самих входных данных (например, предсказание скрытых фрагментов трафика или маскированных параметров канала). Это критически важно для RAN, где ручная разметка данных в масштабах сети практически невозможна
+
+**Федеративное обучение (Federated Learning — FL)**
+
+
+Принцип: Локальные агенты (gNB, UE) обучают модели на собственных данных, после чего передают на центральный узел не сами данные, а градиенты или обновления весов. Центральный сервер агрегирует их и рассылает улучшенную глобальную модель обратно. 
+
+Позволяет обучать модели на репрезентативных, но децентрализованных выборках. Обеспечивает масштабируемость и конфиденциальность данных.
+
+**Семантически-ориентированная нарезка сети (Semantic-Aware Network Slicing)**
+Эволюция концепции сетевых срезов от ресурсо-ориентированной к задаче-ориентированной модели.
+
+Традиционный подход: Срез гарантирует определенный набор ресурсов (полоса пропускания, приоритет) для достижения целевых KPI (задержка, скорость).
+
+Семантический подход: Срез оптимизируется для максимизации полезности на уровне приложения (task-level utility). Целевой функцией становится не абстрактная задержка, а, например, вероятность успешного распознавания события в XR(расш реальнсость). Распределение ресурсов внутри среза становится динамическим и адаптируется к семантической значимости трафика в конкретный момент.
+
+**Планирование на базе цифровых двойников (Digital Twin-assisted Planning)**
+Концепция: Создается высокоточная виртуальная реплика физической сети (Digital Twin), которая функционирует в ускоренном или симулированном времени.
+
+Функция: Политики, генерируемые уровнем оркестрации (например, алгоритмы энергосбережения или хэндовера), предварительно валидируются на этой модели. Анализируются их долгосрочные последствия, потенциальные конфликты и влияние на глобальные метрики, после чего только одобренные политики инстанцируются в реальной сети. Это снижает энтропию и риски, присущие самообучающимся системам.
+
+**Управление политиками в архитектуре O-RAN (Policy Governance)**
+
+Сущность: Определяет набор ограничений и целевых показателей верхнего уровня, которые выступают жесткими рамками (guardrails) для нижележащих оптимизационных циклов (xApps/rApps). Политики формализуют требования оператора (SLA, зоны покрытия, приоритеты трафика) и транслируют их в условия, которые должны соблюдать агенты ИИ при принятии решений.
+
+
+**Заметки для докладчика:**
+**Многоагентное обучение с подкреплением (Multi-Agent Reinforcement Learning — MARL)**
+Принцип: Каждый агент наблюдает локальное состояние, выполняет действие и получает сигнал вознаграждения, стремясь максимизировать кумулятивную награду.
+
+Координация:
+Centralized Training Decentralized Execution (CTDE): В процессе обучения есть доступ к глобальной информации (состояния и действия всех агентов), что стабилизирует обучение и смягчает проблему нестационарности среды. В процессе выполнения агенты действуют исключительно на основе локальных наблюдений, что обеспечивает масштабируемость.
+
+Иерархическое MARL: Вводится иерархия абстракций, где высокоуровневые агенты задают цели или намерения, а низкоуровневые агенты реализуют конкретные действия для их достижения. Это позволяет декомпозировать сложные задачи и управлять временными масштабами принятия решений.
+
+ **Семантическая координация агентов (Semantic Agent Coordination)**
+Принцип коммуникации между агентами, основанный на передаче не сырых данных (raw telemetry), а сжатых, задачно-ориентированных представлений. Семантическая координация предполагает, что агенты транслируют только семантически значимую информацию, необходимую для кооперативного выполнения задачи. Сообщения становятся инвариантными к несущественным изменениям среды.
+
+**Графы знаний (Knowledge Graphs — KGs)**
+KGs кодируют декларативные знания о топологии сети, доступных сервисах, намерениях приложений (service intents), исторических паттернах и контекстной информации об окружении.
+
+Применение: Агенты используют KGs для логического вывода (reasoning) — например, для понимания каузальных связей между действиями и состоянием сети, или для извлечения релевантного контекста при планировании. 
+
+**Базовые модели (Foundation Models)**
+Крупномасштабные модели (например, большие языковые модели), обученные на разнородных данных и способные к обобщению на широкий спектр задач без тонкой настройки.
+
+**Безопасное агрегирование (Secure Aggregation)**
+Криптографический протокол, используемый в распределенном обучении (например, в Federated Learning), позволяющий серверу вычислить агрегированное обновление модели от множества клиентов, не имея доступа к индивидуальным обновлениям каждого клиента.
+
+Цель: Предотвращение утечки чувствительной информации через градиенты и обеспечение конфиденциальности данных даже от честного, но любопытного (honest-but-curious) агрегатора.
+
+**Аудит политик (Policy Auditing) и Происхождение моделей (Model Provenance)**
+Аудит политик: Процесс верификации решений, принимаемых агентами, на соответствие заданным ограничениям (политикам) и ожидаемому поведению. Позволяет выявлять нежелательные или небезопасные стратегии, выработанные в процессе обучения.
+
+L4
+
+
+**Заметки для докладчика:**
+ **Семантическое кодирование (Semantic Encoding)**
+ Семантический кодировщик (реализуемый, как правило, на базе нейронных сетей) преобразует исходные данные (изображение, речь, сенсорные показания) в семантические эмбеддинги. Это отображение осуществляется не в пространство битов, а в пространство смыслов, где близость векторов соответствует семантической близости, релевантной для конкретной задачи.
+
+**Гибкая архитектурная интеграция**
+Семантический уровень не является монолитным блоком; его функциональность может быть распределена по стеку в зависимости от требований к задержкам и доступности стандартизации.
+
+Размещение вблизи приложений (Task-level Semantics): Семантическое кодирование выполняется на уровне приложения или непосредственно перед ним. Такой подход предпочтителен для сервисов, где важна интерпретация высокоуровневых намерений. Это позволяет достичь максимальной степени сжатия, но может увеличивать задержки.
+
+Размещение внутри PHY (Feature-level Semantics): Семантическое кодирование интегрируется непосредственно в стек физического уровня, выступая как "семантический кодек". Это минимизирует задержки и позволяет осуществлять сквозную оптимизацию совместно с канальным кодированием (как в Deep JSCC). Такой подход целесообразен для приложений реального времени, где критична минимизация латентности.
+
+
+
+
+
+
+
+
+
+## 6G (AI native): Коллаборация между AI NF (AI-Native Functions Collaboration)
+
+- В 6G сами сетевые функции (NF) становятся "агентами" ИИ. Одна функция, отвечающая за управление трафиком, может "пообщаться" с другой функцией, отвечающей за энергопотребление, через стандартизированный API.
+- AI NF обмениваются не сырыми метриками, а выводами, намерениями и контекстом
+  
+**Горизонтальная и вертикальная коллаборация**
+
+Горизонтальная: Агенты одного уровня (например, несколько базовых станций) договариваются о распределении нагрузки, координации лучей, управлении помехами
+
+Вертикальная: Агенты разных уровней (RAN, транспортная сеть, ядро сети, облако) обмениваются контекстом для сквозной оптимизации
+
+## Семантическая связь (SemCom)
+
+- Суть: Передача смысла/интенции, а не битов. Используются AI-модели для извлечения семантических признаков, их компактного кодирования и передачи.
+- Техническая схема:  
+  - Извлечение семантики: \( z = f_{\text{enc}}(x) \)
+  - Восстановление: \( \hat{x} = f_{\text{dec}}(z) \)
+- Преимущества: Экономия полосы, устойчивость к ошибкам, приоритет важной информации.
+- Метрики: Точность задачи, семантическая достоверность, коэффициент семантического сжатия.
+- Вызовы: Совместимость с классическими системами, унификация архитектуры, стандартизация метрик.
+
+## Совместное кодирование источника и канала (JSCC)
+
+- Суть: Одновременная оптимизация сжатия и защиты от ошибок с помощью AI-моделей (обычно нейросетей).
+- Техническая схема:  
+  - Энд-ту-энд функция: \( y = f_{\text{JSCC}}(x, h) \)
+- Преимущества: Устойчивость к помехам, низкая задержка, высокая семантическая точность.
+- Вызовы: Требует новых аппаратных/программных решений, обобщаемость, стандартизация.
+
+## Семантическая база знаний (Semantic KB)
+
+- Суть: Общая база (обычно векторный кодбук) для хранения и обмена семантическими признаками между устройствами.
+- Техническая схема:  
+  - Поиск ближайшего признака: \( k^* = \arg\min_k \| f_{\text{sem}}(x) - k \| \)
+- Преимущества: Снижение избыточности, ускорение передачи, высокая семантическая достоверность.
+- Вызовы: Согласованность между устройствами, масштабируемость, безопасность.
+
+## Многоагентные AI-системы: архитектуры, протоколы, безопасность
+
+- Архитектуры агентов:  
+  - LLM-агенты (на базе больших языковых моделей) для понимания и генерации смыслов.
+  - Агент на основе RL (обучения с подкреплением) для адаптивных решений.
+  - Гибридные архитектуры (глубокое обучение + символическое ИИ).
+- Протоколы взаимодействия:  
+  - Обмен семантическими токенами/интенциями вместо сырых данных.
+  - Model Division MA (MDMA) — совместное использование моделей между агентами.
+  - Доступ к общей или распределённой базе знаний.
+- Оркестрация задач:  
+  - Динамическое распределение подзадач между агентами по их возможностям и контексту сети.
+  - Совместное рассуждение и принятие решений.
+- Безопасность и доверие:  
+  - Проверка подлинности семантических токенов.
+  - Приватность (минимизация передачи сырых данных).
+  - Необходимость стандартных протоколов безопасности.
+
+
+Here are presentation slides based on the provided text, structured for a technical audience. Each slide includes concise bullet points for visual presentation and detailed speaker notes for the presenter.
+
+---
+
+### Slide 1: Title Slide
+
+**Title:** The 6G Native-AI Architecture: From Bit Pipes to Knowledge-Driven Ecosystems
+
+**Subtitle:** A Multi-Layer Stack with Semantic and Agentic Intelligence
+
+**Presenter Name & Affiliation**
+**Date**
+
+**Speaker Notes:**
+"Good morning/afternoon everyone. Today, we're going to explore a foundational shift in how we design communication networks. We'll move beyond the 5G and O-RAN paradigms, where Artificial Intelligence is merely an 'app' or an optimizer bolted onto the system. Instead, we will delve into the emerging vision for a 6G 'Native-AI' architecture—a system where intelligence is not just an add-on, but a fundamental, built-in property. This new architecture promises to transform our networks from simple bit pipes into adaptive, knowledge-driven ecosystems that communicate through meaning and act with autonomy."
+
+---
+
+### Slide 2: The Core Concept: Intelligence as a Native Property
+
+**Title:** Beyond Appended AI: The Shift to a Native-AI RAN
+
+**Graphic:** A simple diagram contrasting the two concepts.
+- **Left (Conventional/AI-Driven O-RAN):** A 'RAN' box with an 'AI Optimizer' box attached to it externally.
+- **Right (6G Native-AI):** A layered stack (PHY, MAC, Network, etc.) with "Intelligence" woven throughout, represented by a glowing, integrated background or cross-layer arrows. Labels: "SemCom" and "Agentic Intelligence" as cross-cutting enablers.
+
+**Bullet Points:**
+- **Conventional RAN:** AI is a standalone optimizer.
+- **6G Native-AI:**
+    - Intelligence embedded across the **entire protocol stack**.
+    - Network as an **adaptive ecosystem**.
+    - Communicates **meaning** (Semantic Communication).
+    - Reasons and acts **autonomously** (Agentic Intelligence).
+
+**Speaker Notes:**
+"To understand the scale of this shift, let's look at the core concept. In today's O-RAN and 5G architectures, AI is often confined to specialized controllers like rApps and xApps—think of it as an external optimizer that tunes the network. The 6G vision, as described in the literature, is fundamentally different. Here, intelligence is woven into the very fabric of the network stack. The network is no longer a static set of rules but an adaptive ecosystem. This is enabled by two key paradigm shifts: first, we move from communicating bits to communicating *meaning* through Semantic Communication, or SemCom. Second, we empower network elements to act not just as reactive nodes, but as proactive, autonomous *agents*."
+
+---
+
+### Slide 3: The 6G Native-AI Architecture Stack
+
+**Title:** A Multi-Layer Stack for an Intelligent Network
+
+**Graphic:** A vertical stack diagram with the following layers, using connecting arrows to show interaction.
+- **(Top) Application & Services**
+- **5. Semantic Layer** (Cross-cutting, interacts with all layers)
+- **4. Agentic Intelligence Layer** (Cross-cutting, interacts with all layers)
+- **3. AI-Native Orchestration Layer**
+- **2. Radio Access & Physical Foundation**
+- **(Bottom) Radio Hardware**
+
+**Speaker Notes:**
+"This vision translates into a concrete multi-layer architecture. At the base, we have the physical and radio access foundation, which is being re-imagined through the lens of AI. Above that, an orchestration layer manages the network's learning and control fabric. Then we have two critical, cross-cutting layers: the agentic layer, which provides autonomy, and the semantic layer, which provides shared meaning. These layers don't operate in isolation; they form a tightly integrated system. Let's examine each one in detail, starting from the foundation and working our way up."
+
+---
+
+### Slide 4: Layer 1: Radio Access & Physical Foundation
+
+**Title:** Re-Imagining the Physical Layer for Tasks, Not Bits
+
+**Bullet Points:**
+- **From Block-wise to End-to-End Learning:**
+    - Deep JSCC, Neural Transceivers.
+    - Jointly optimize modulation, coding, beamforming.
+- **New Performance Metrics:**
+    - Move beyond BER/BLER to **Task Success Rate (TSR)** and **Semantic Fidelity**.
+- **Proactive Adaptation:**
+    - RL for beamforming, link adaptation, spectrum access.
+- **Edge Device Constraints:**
+    - Model pruning, quantization, adaptive-complexity inference.
+
+**Speaker Notes:**
+"The foundation of this new architecture starts at the physical layer. We are moving away from traditional, block-wise designs where channel coding, modulation, and beamforming are optimized separately. Instead, we see the rise of end-to-end learned systems like Deep Joint Source-Channel Coding, or JSCC. In these neural transceivers, the entire pipeline is optimized jointly. The key driver here is a change in objective. We no longer care just about minimizing bit errors; for a 6G service like a autonomous drone or an XR headset, the ultimate goal is task success. Is the drone able to identify the obstacle? Is the XR scene coherent? This shift from bit reconstruction to task success and semantic fidelity is foundational. And all of this must be done while respecting the severe energy and compute constraints of edge devices, hence the crucial role of model compression techniques."
+
+---
+
+### Slide 5: Layer 2: AI-Native Orchestration Layer
+
+**Title:** Governing the Network's Long-Term Learning & Evolution
+
+**Bullet Points:**
+- **Sustained Learning:**
+    - Continual/Self-supervised learning for non-stationary environments.
+    - Distributed learning (Federated Learning, Split Learning) for scalability & privacy.
+- **Semantic-Aware Network Slicing:**
+    - Slices optimized for **task-level utility** (e.g., V2X intent reliability) not just KPIs.
+- **Non-Real-Time Functions:**
+    - Digital Twin-assisted planning, policy governance (O-RAN aligned).
+
+**Speaker Notes:**
+"Moving up, we have the AI-Native Orchestration layer. If the physical layer is about fast, real-time decisions, this layer is about managing the network's long-term evolution. It's responsible for the 'learning' part of the equation. Techniques like federated learning allow models to be trained across many edge nodes without centralizing sensitive data. And we see a semantic-aware evolution of network slicing. Instead of just reserving bandwidth for a V2X slice, the orchestrator shapes the slice to ensure the *intent* of the communication—like a reliability of a maneuver coordination message—is met. This layer also leverages powerful tools like Digital Twins to simulate and plan network changes before they are deployed in the real world."
+
+---
+
+### Slide 6: Layer 3: Agentic Intelligence Layer
+
+**Title:** Network Elements as Autonomous, Learning Agents
+
+**Bullet Points:**
+- **Network as a Multi-Agent System:**
+    - Base stations, edge servers, UEs act as autonomous agents.
+    - Coordination via **Multi-Agent RL** (e.g., CTDE, Hierarchical MARL).
+- **Semantic Coordination:**
+    - Agents communicate via **task-relevant semantic messages**, not raw telemetry.
+    - Reduces signaling overhead, enhances cooperative efficiency.
+- **Contextual Reasoning:**
+    - **Knowledge Graphs (KGs):** Encode relationships (network state, service intent).
+    - **Foundation Models:** Provide semantic extraction & planning priors.
+- **Trust & Robustness:**
+    - Secure aggregation, policy auditing, model provenance.
+
+**Speaker Notes:**
+"The third layer introduces what we call 'agentic intelligence'. Here, we conceptualize network elements—like a base station or a drone—not just as nodes that forward data, but as autonomous agents. These agents perceive their local environment, make decisions, and learn from the rewards of those actions. They coordinate with each other, often using multi-agent reinforcement learning. A critical innovation here is that they coordinate using *semantic messages*—for example, an agent might send a message saying 'intersection congested, reroute traffic' instead of sending gigabytes of raw camera feeds. This dramatically reduces overhead. They are supported by knowledge graphs, which provide structured context, and foundation models, which offer general-purpose reasoning and planning capabilities. All of this is built on a foundation of trust and security to ensure the system's behavior is robust and auditable."
+
+---
+
+### Slide 7: Layer 4: The Semantic Layer
+
+**Title:** Communicating Meaning, Not Just Symbols
+
+**Bullet Points:**
+- **Redefining "What" is Transmitted:**
+    - Semantic encoders extract task-relevant embeddings (features, intents, knowledge).
+- **New Key Performance Indicators:**
+    - **Task Success Rate (TSR)** and **Semantic Fidelity**.
+    - Measured by similarity in embedding space (e.g., cosine distance).
+- **Flexible Placement:**
+    - Near application endpoints (for task-level semantics).
+    - Within the PHY stack (for feature-level semantics).
+
+**Speaker Notes:**
+"The semantic layer is the fourth pillar, and it works hand-in-hand with the agentic layer. While the agentic layer defines the *actors*, the semantic layer defines the *language* they speak. It fundamentally redefines what is exchanged over the air. Instead of transmitting raw bits and symbols, semantic encoders extract and transmit the *meaning* that is relevant for a specific task. Consequently, our KPIs evolve from bit rate and latency to Task Success Rate and Semantic Fidelity. For instance, how similar is the meaning of the received message to the one that was sent, as measured in an AI embedding space? This semantic encoding isn't a fixed function; it can be placed flexibly, either close to the application for high-level intent or even within the physical layer for low-latency feature compression."
+
+---
+
+### Slide 8: The Closed-Loop: Semantic-Agentic Coupling
+
+**Title:** The Engine of a Self-Evolving Network
+
+**Graphic:** A circular flow diagram showing the interaction:
+- **Semantic Layer** (Provides meaning-rich inputs) --> **Agentic Layer** (Guides policy selection)
+- **Agentic Layer** (Decides what/ when to transmit) --> **Semantic Layer** (Adapts semantic units)
+- **Agentic Layer** (Generates adaptive policies) --> **Orchestration Layer** (Feeds into optimization)
+- **Orchestration Layer** (Provides updated models) --> **Semantic & Agentic Layers** (Refines encoders/policies)
+
+**Central Text:** **Closed-Loop Interaction -> Self-Optimizing & Self-Evolving Network**
+
+**Speaker Notes:**
+"These layers are not independent modules; they are intrinsically coupled in a powerful closed loop. The semantic layer provides the meaning-rich, compact inputs that guide agent collaboration and policy selection. In turn, the agents' decisions determine which semantic information needs to be transmitted and when. The agents' policies then feed up into the orchestration layer, which uses this information for long-term optimization and planning. Finally, the orchestration layer updates the models—both the semantic encoders and the agent policies—which are then deployed back to the edge. This cyclic interaction is what makes the network not just self-optimizing, but truly self-evolving, continuously adapting to new environments and application demands."
+
+---
+
+### Slide 9: The Cost of Intelligence: LFM/KG Agents in Practice
+
+**Title:** Practical Considerations: The Cost of Foundation Model Agents
+
+**Graphic:** A table or three icons representing the main cost dimensions.
+
+| Cost Dimension | Challenge | Mitigation |
+| :--- | :--- | :--- |
+| **Inference Latency** | 10-100x slower than lightweight RL policies. | Place LLM agents in **non-RT/near-RT loops**. Use **slow/fast** hierarchical control. |
+| **Model Size & Memory** | Billions of parameters exceed edge device budgets. | **Parameter-efficient fine-tuning**, pruning, distillation. Offload to edge/cloud servers. |
+| **DT & Edge Dependence** | Extra complexity for what-if analysis & offloading. | **DT-Copilot** & hierarchical frameworks. Requires careful budgeting, not drop-in replacement. |
+
+**Speaker Notes:**
+"Now, while Large Foundation Models and Knowledge Graphs offer immense potential, we must be pragmatic about their costs. The research consistently points to three major challenges. First, **inference latency**: an LLM-based agent can be 10 to 100 times slower than a traditional policy, making it unusable for real-time control. Second, **model size**: these models are huge and can't simply be dropped onto a resource-constrained base station. And third, they often **depend on Digital Twins** or edge offloading for safe validation and execution, which adds system complexity. The key takeaway is that we must view these powerful models as high-level *planners* for slow-timescale decisions, not as a drop-in replacement for fast, real-time controllers. A balanced design requires explicit budgeting for latency, footprint, and offloading."
+
+---
+
+### Slide 10: Conclusion: A New Era of Knowledge-Driven Networks
+
+**Title:** From Bit Pipes to Knowledge-Driven Ecosystems
+
+**Summary Points:**
+- **6G Native-AI** is a paradigm shift from appended AI to an **intelligence-native** property.
+- The architecture is a multi-layer stack with **Semantic and Agentic Intelligence** as its core enablers.
+- This creates a **closed-loop, self-evolving system** where communication is aligned with task relevance and autonomy is grounded in shared meaning.
+- The transition is from optimizing **bit pipes** to cultivating **knowledge-driven ecosystems**.
+
+**Closing Image:** An inspiring graphic of a connected, intelligent world (smart cities, autonomous vehicles, advanced XR).
+
+**Speaker Notes:**
+"In conclusion, the 6G Native-AI architecture represents a profound paradigm shift. We are moving away from networks that simply transport data to networks that *understand* it. By embedding semantic and agentic intelligence as native properties across a multi-layer stack, we create a closed-loop system that is not only self-optimizing but also self-evolving. The journey from bit pipes to knowledge-driven ecosystems is just beginning, and the architectural principles we've discussed today will be the foundation upon which the truly intelligent applications of the future are built. Thank you."
