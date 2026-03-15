@@ -2,6 +2,10 @@
 
 
 
+# [](gitverse.ru/eademidova/study_2025-2026_mathmod/compare/v1.1.0...v) (2026-03-15)
+
+
+
 #  (2026-02-11)
 
 
