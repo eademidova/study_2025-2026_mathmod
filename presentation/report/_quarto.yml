@@ -42,8 +42,8 @@ format:
     number-sections: true
     colorlinks: false
     toc-depth: 2
-    lof: true # List of figures
-    lot: true # List of tables
+    lof: false # List of figures
+    lot: false # List of tables
     #### Document
     documentclass: scrreprt
     papersize: a4
