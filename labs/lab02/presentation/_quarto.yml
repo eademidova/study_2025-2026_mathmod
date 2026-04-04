@@ -4,3 +4,4 @@ project:
 
 standalone: true
 self-contained: true
+slide-level: 2
